@@ -1,4 +1,4 @@
-name: Run E2E tests
+name: Cypress Tests
 
 on: push
 
@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Pnpm
-        uses: actions/setup-node@v2
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
         with:
           version: 8
           run_install: false
@@ -23,7 +23,7 @@ jobs:
       - name: Get pnpm store directory
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)= >> $GITHUB_ENV"
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
         uses: actions/cache@v3
@@ -32,9 +32,8 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-
       - name: Install dependencies
-        uses: pnpm install
+        run: pnpm install
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
