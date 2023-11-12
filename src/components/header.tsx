@@ -1,9 +1,11 @@
-import { PATH_HOME } from '@/constants/paths'
-import Link from 'next/link'
+import { Suspense } from 'react'
 import { Settings } from 'lucide-react'
 import Image from 'next/image'
-import { CartWidget } from './cart-widget'
+import Link from 'next/link'
+
 import { SearchForm } from './search-form'
+import { CartWidget } from './cart-widget'
+import { PATH_HOME } from '@/constants/paths'
 
 export function Header() {
   return (
@@ -13,7 +15,9 @@ export function Header() {
           devstore
         </Link>
 
-        <SearchForm />
+        <Suspense fallback={null}>
+          <SearchForm />
+        </Suspense>
       </div>
 
       <div className="flex items-center gap-4">
